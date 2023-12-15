@@ -83,6 +83,12 @@ export async function signMessage(message: string, privateKey: string): Promise<
     return Promise.resolve(base.toBase58(signature))
 }
 
+export function getMPCTransaction(raw: string, sig: string, publicKey: string): Promise<string> {
+    let tx = web3.Transaction.from(base.fromHex(raw))
+    tx.addSignature(new PublicKey(publicKey), base.fromHex(sig))
+    return Promise.resolve(base.toBase58(tx.serialize()))
+}
+
 export async function getHardwareTransaction(raw: string, pubKey: string, sig: string): Promise<string> {
     const rawTransaction = web3.Transaction.from(base.fromHex(raw));
     rawTransaction.addSignature(new PublicKey(pubKey), base.fromHex(sig))

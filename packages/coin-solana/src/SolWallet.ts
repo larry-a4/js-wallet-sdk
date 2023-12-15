@@ -3,6 +3,8 @@ import {
     DerivePriKeyParams,
     GetDerivedPathParam,
     HardwareRawTransactionParam,
+    MpcRawTransactionParam,
+    MpcTransactionParam,
     NewAddressData,
     NewAddressParams,
     SignTxParams,
@@ -160,6 +162,24 @@ export class SolWallet extends BaseWallet {
             return Promise.resolve(base.toBase58(transaction.signature));
         } catch (e) {
             return Promise.reject(CalcTxHashError);
+        }
+    }
+
+    async getMPCRawTransaction(param: MpcRawTransactionParam): Promise<any> {
+        try {
+            const mpcRaw = await this.signTransaction(param as SignTxParams);
+            return Promise.resolve({ mpcRaw });
+        } catch (e) {
+            return Promise.reject(e);
+        }
+    }
+
+    async getMPCTransaction(param: MpcTransactionParam): Promise<any> {
+        try {
+            const signedTx = api.getMPCTransaction(param.raw, param.sigs as string, param.publicKey!);
+            return Promise.resolve(signedTx);
+        } catch (e) {
+            return Promise.reject(e);
         }
     }
 
