@@ -3,6 +3,7 @@ import {
     DerivePriKeyParams,
     GetDerivedPathParam,
     HardwareRawTransactionParam,
+    GetAddressParams,
     MpcRawTransactionParam,
     MpcTransactionParam,
     NewAddressData,
@@ -163,6 +164,10 @@ export class SolWallet extends BaseWallet {
         } catch (e) {
             return Promise.reject(CalcTxHashError);
         }
+    }
+
+    getAddressByPublicKey(param: GetAddressParams): Promise<string> {
+        return Promise.resolve(base.toBase58(base.fromHex(param.publicKey)));
     }
 
     async getMPCRawTransaction(param: MpcRawTransactionParam): Promise<any> {
