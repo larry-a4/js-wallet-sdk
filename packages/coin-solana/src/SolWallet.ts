@@ -173,7 +173,7 @@ export class SolWallet extends BaseWallet {
     async getMPCRawTransaction(param: MpcRawTransactionParam): Promise<any> {
         try {
             const mpcRaw = await this.signTransaction(param as SignTxParams);
-            return Promise.resolve({ mpcRaw });
+            return Promise.resolve({ hash: mpcRaw });
         } catch (e) {
             return Promise.reject(e);
         }
